@@ -1,0 +1,17 @@
+<project>
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>root</groupId>
+   <version>1.0</version>
+   <artifactId>project</artifactId>
+   <packaging>pom</packaging>
+   <name>project</name>
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>root.project.projects</groupId>
+            <artifactId>logging</artifactId>
+            <version>1.0</version>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+</project>
