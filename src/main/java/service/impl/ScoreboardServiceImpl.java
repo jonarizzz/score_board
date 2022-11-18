@@ -5,6 +5,13 @@ import entities.Score;
 import entities.Scoreboard;
 import entities.Team;
 import service.ScoreboardService;
+import utils.GamesComparator;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ScoreboardServiceImpl implements ScoreboardService {
 
@@ -31,6 +38,16 @@ public class ScoreboardServiceImpl implements ScoreboardService {
         Game game = scoreboard.getGamesInProgress().get(gameIndex);
         game.finish();
         scoreboard.getGamesInProgress().remove(gameIndex);
+    }
+
+    @Override
+    public List<Game> getSummaryOfGamesInProgress() {
+
+        return scoreboard.getGamesInProgress()
+                .stream()
+                .sorted(new GamesComparator().reversed())
+                .collect(Collectors.toList());
+
     }
 
     public Scoreboard getScoreboard() {

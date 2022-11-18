@@ -1,10 +1,13 @@
 package service.impl;
 
+import entities.Game;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import service.ScoreboardService;
+
+import java.util.List;
 
 public class ScoreBoardServiceTest {
 
@@ -27,9 +30,10 @@ public class ScoreBoardServiceTest {
 
     @Test
     public void testStartingTheGameSecond(){
-        Assert.assertEquals(0, scoreboardService.getScoreboard().getGamesInProgress().get(0).getScore()
+        int gameIndex = 2;
+        Assert.assertEquals(0, scoreboardService.getScoreboard().getGamesInProgress().get(gameIndex).getScore()
                 .getHomeTeamScore());
-        Assert.assertEquals(0, scoreboardService.getScoreboard().getGamesInProgress().get(0).getScore()
+        Assert.assertEquals(0, scoreboardService.getScoreboard().getGamesInProgress().get(gameIndex).getScore()
                 .getAwayTeamScore());
     }
 
@@ -49,6 +53,25 @@ public class ScoreBoardServiceTest {
         scoreboardService.finishGame(gameIndex);
         Assert.assertEquals(4, scoreboardService.getScoreboard().getGamesInProgress().size());
 
+    }
+
+    @Test
+    public void testSummaryOfGamesInProgress(){
+        scoreboardService.updateGameScore(0, 5, 0);
+        scoreboardService.updateGameScore(1, 5, 5);
+        scoreboardService.updateGameScore(2, 5, 2);
+        scoreboardService.updateGameScore(3, 3, 2);
+        scoreboardService.updateGameScore(4, 1, 1);
+
+        List<Game> sortedGames = scoreboardService.getSummaryOfGamesInProgress();
+
+        Assert.assertEquals(10, sortedGames.get(0).getScore().getAwayTeamScore() +
+                sortedGames.get(0).getScore().getHomeTeamScore());
+
+        Assert.assertEquals(2, sortedGames.get(4).getScore().getAwayTeamScore() +
+                sortedGames.get(4).getScore().getHomeTeamScore());
+
+        Assert.assertEquals(0, sortedGames.get(2).getScore().getAwayTeamScore());
     }
 
     @After
