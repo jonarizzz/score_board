@@ -33,6 +33,24 @@ public class ScoreBoardServiceTest {
                 .getAwayTeamScore());
     }
 
+    @Test
+    public void testUpdateScore(){
+        int gameIndex = 2;
+        scoreboardService.updateGameScore(2, 7, 2);
+        Assert.assertEquals(7,
+                scoreboardService.getScoreboard().getGamesInProgress().get(gameIndex).getScore().getHomeTeamScore());
+        Assert.assertEquals(2,
+                scoreboardService.getScoreboard().getGamesInProgress().get(gameIndex).getScore().getAwayTeamScore());
+    }
+
+    @Test
+    public void testFinishingTheGame(){
+        int gameIndex = 2;
+        scoreboardService.finishGame(gameIndex);
+        Assert.assertEquals(4, scoreboardService.getScoreboard().getGamesInProgress().size());
+
+    }
+
     @After
     public void after(){
         scoreboardService = null;
